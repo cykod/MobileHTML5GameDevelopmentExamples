@@ -1,0 +1,20 @@
+{
+  "name": "Alien Invasion",
+  "description": "Save the world, you know the drill...",
+  "version": "1.0.0",
+  "app": {
+    "urls": [
+      "*://cykod.github.com/AlienInvasion/"
+    ],
+    "launch": {
+      "web_url": "http://cykod.github.com/AlienInvasion/"
+    }
+  },
+  "icons": {
+    "128": "invasion_128.png"
+  },
+  "offline_enabled": true,
+  "permissions": [
+  ]
+}
+

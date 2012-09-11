@@ -1,0 +1,4 @@
+temp
+dist
+*.log
+.sass-cache/

@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Gradient Test</title>
+</head>
+<body>
+
+<svg id="mysvg" xmlns="http://www.w3.org/2000/svg" version="1.1" 
+width="800" height="800" >
+  <defs>
+    <linearGradient id="linear-test" 
+                    x1="1" y1="0" x2="0" y2="0">
+      <stop offset="5%" stop-color="black" />
+      <stop offset="55%" stop-color="white" />
+      <stop offset="95%" stop-color="black" />
+    </linearGradient>
+    <radialGradient id="radial-test" 
+                    cx="0" cy="0" r="1" fx="0" fy="0">
+      <stop offset="5%" stop-color="black" />
+      <stop offset="55%" stop-color="white" />
+      <stop offset="95%" stop-color="black" />
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="50" width="375" height="375" fill="url(#linear-test)" />
+  <rect x="400" y="50" width="375" height="375" fill="url(#radial-test)" />
+</svg>
+
+</body>
+</html>

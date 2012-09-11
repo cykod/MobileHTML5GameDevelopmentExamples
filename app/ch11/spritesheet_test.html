@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Sprite Test</title>
+    <script src='jquery.min.js'></script>
+    <script src='underscore.js'></script>
+    <script src='quintus.js'></script>
+    <script src='quintus_sprites.js'></script>
+  </head>
+  <body>
+    <script>
+      var Q = Quintus().include('Sprites').setup();
+      Q.load(['sprites.png','sprites.json'],function() {
+        Q.compileSheets('sprites.png','sprites.json');
+
+        var slowDown = 4,
+            frame1 = 0, 
+            frame2 = 0;
+
+        Q.gameLoop(function() {
+          Q.clear();
+
+          var sheet1 = Q.sheet('man');
+          sheet1.draw(Q.ctx,50,50,Math.floor(frame1/slowDown));
+          frame1 = (frame1+1) % (sheet1.frames  * slowDown);
+
+          var sheet2 = Q.sheet('blob');
+          sheet2.draw(Q.ctx,150,50,Math.floor(frame2/slowDown));
+          frame2 = (frame2+1) % (sheet2.frames * slowDown);
+        });
+      });
+    </script>
+  </body>
+</html>
+

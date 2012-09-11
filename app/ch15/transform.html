@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+</head>
+  <script src='jquery.min.js'></script>
+  <style> canvas { background-color:black; } </style>
+
+  <canvas id="mycanvas", width="600" height="400"></canvas>
+
+  <script>
+    var canvas = $("#mycanvas")[0],
+        ctx = canvas.getContext("2d"),
+        width = canvas.width,
+        height = canvas.height;
+
+
+    ctx.fillStyle = "#F00";
+    ctx.fillRect(250,200,100,100);
+
+
+    ctx.fillStyle = "#FFF";
+    ctx.translate(250,200);
+
+    ctx.translate(50,50);
+    ctx.rotate(45 * Math.PI / 180);
+    ctx.translate(-50,-50);
+
+    ctx.fillRect(0,0,100,100);
+
+        
+
+  </script>
+</body>
+</html>
+
+
+

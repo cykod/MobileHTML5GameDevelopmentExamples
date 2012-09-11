@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+</head>
+  <script src='jquery.min.js'></script>
+  <canvas id="mycanvas", width="400" height="400"></canvas>
+  <div id='snapshots'></div>
+
+  <script>
+    var canvas = $("#mycanvas")[0],
+        ctx = canvas.getContext("2d");
+
+    function randInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    function drawRandomRectangle() {
+      var r = randInt(255), g = randInt(255), b = randInt(255),
+          s = randInt(100), x = randInt(400), y = randInt(400);
+
+      ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+      ctx.fillRect(x,y,s,s);
+    }
+
+    setInterval(drawRandomRectangle,50);
+
+    $(canvas).on("click touchstart",function(e) {
+      var url = canvas.toDataURL("image/png");
+
+      $("<img>").attr({ src: url, width: 100, height: 100 }).prependTo("#snapshots");
+      e.preventDefault();
+    });
+
+  </script>
+</body>
+</html>

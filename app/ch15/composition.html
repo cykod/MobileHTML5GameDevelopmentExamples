@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+</head>
+<body>
+  <script src='jquery.min.js'></script>
+  <style> canvas { background-color:black; } </style>
+
+  <script>
+     var mouseX = null, mouseY = null;
+
+    var compositeTypes = [
+      'source-over','source-in','source-out','source-atop',
+      'destination-over','destination-in','destination-out','destination-atop',
+      'lighter','copy','xor'
+    ];
+
+    $.each(compositeTypes,function() {
+      var wrapper = $("<div>").css({ float:"left"}).html("<div>" + this + "</div>");
+
+      $("<canvas width='200' height='200'>")
+          .attr('id',this)
+          .appendTo(wrapper);
+
+      wrapper.appendTo("body");
+    });
+    
+    function drawFrame() {
+
+      $.each(compositeTypes,function() {
+        var canvas = $("#" + this)[0],
+            ctx = canvas.getContext("2d"),
+            width = canvas.width,
+            height = canvas.height;
+
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = "#000000";
+        ctx.clearRect(0,0,width,height);
+        ctx.fillStyle = "#0000FF";
+        ctx.strokeStyle = "#FFF";
+        for(var y=0;y<=height;y+=height/10) {
+          for(var x=0;x<=width;x+=width/10) {
+            ctx.beginPath();
+            ctx.arc(x,y,width/30,0,Math.PI*2,true);
+            ctx.fill();
+          }
+        }
+
+        ctx.globalCompositeOperation = this;
+
+        if(mouseX !== null) {
+          ctx.fillStyle = "#FF0000";
+
+          ctx.beginPath();
+          ctx.arc(mouseX,mouseY,width/10,0,Math.PI*2,true);
+          ctx.fill();
+        }
+      });
+
+    }
+
+    $("canvas").on("touchstart touchmove mousemove",function(e) {
+      var touch = e.originalEvent.changedTouches ? 
+                      e.originalEvent.changedTouches[0] : e;
+
+      mouseX = touch.offsetX || (touch.pageX - $(touch.target).offset().left);
+      mouseY = touch.offsetY || (touch.pageY - $(touch.target).offset().top);
+      e.preventDefault();
+      drawFrame();
+    });
+
+    drawFrame();
+        
+
+  </script>
+</body>
+</html>

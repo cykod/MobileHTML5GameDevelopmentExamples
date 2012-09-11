@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>A Birdhouse</title>
+</head>
+<body>
+
+<svg id="mysvg" xmlns="http://www.w3.org/2000/svg" version="1.1" 
+     width="400" height="400" 
+     viewbox="0 0 150 150" >
+  <g transform="rotate(-5,75,75)">
+    <rect id="rect" x="50" y="50" rx="5" ry="5" width="50" height="50" fill="black" />
+    <circle id="circle" cx="75" cy="75" r="10" fill="#CCC"/>
+    <path d="M 50 50 L 75 50 L 75 0 z"
+          fill="black" stroke="#CCC" stroke-width="2"/>
+    <polygon points="75,50 100,50 75,0" 
+          fill="#CCC" stroke="black" stroke-width="2"/>
+  </g>
+  <image xlink:href='images/penguin.png' 
+     width='32' height='32'  
+     transform="translate(75,75)"
+     ontouchstart="alert('Penguin Touch');" />
+
+  <text x="75" y="125" text-anchor="middle"
+        font-family="Verdana" font-size="10" fill="black" >
+    A tilted birdhouse
+  </text>
+</svg>
+
+<script>
+ var svg = document.getElementById('mysvg');
+
+ var rect = svg.getElementById('rect');
+
+ rect.addEventListener('touchstart',function(e) {
+   alert('Touched!');
+   e.preventDefault();
+
+ });
+</script>
+
+</body>
+</html>

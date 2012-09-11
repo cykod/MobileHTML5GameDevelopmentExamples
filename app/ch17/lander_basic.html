@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Simple Cannon example</title>
+    <script src='js/jquery.min.js'></script>
+    <script src='js/underscore.js'></script>
+    <script src='js/quintus.js'></script>
+    <script src='js/quintus_input.js'></script>
+    <script src='js/quintus_sprites.js'></script>
+    <script src='js/quintus_scenes.js'></script>
+
+    <meta name="viewport" content="width=480, user-scalable=no">
+    <style>
+      body { padding:0px; margin:0px; }
+      #quintus { background-color:#CCC; }
+    </style>
+  </head>
+  <body>
+    <canvas id='quintus' width='480' height='320'></canvas>
+    
+    <script>
+      var Q = Quintus()
+              .include("Input,Sprites,Scenes")
+              .setup()
+              .controls();
+
+
+      Q.Ship = Q.MovingSprite.extend({
+        step: function(dt) {
+          var p = this.p;
+
+          // Set our horizontal force
+          p.fx = 0;
+          if(Q.inputs['left']) { p.fx -= p.thrustX; }
+          if(Q.inputs['right']) { p.fx += p.thrustX; }
+
+          // Set our vertical force
+          if(Q.inputs['fire']) {
+            p.fy = -p.thrustY;
+            p.asset = "lander_thrust.png";
+            } else {
+            p.fy = 0;
+            p.asset = "lander.png";
+          }
+
+          // Calculate our y and x acceleration
+          p.ay = p.gravity + p.fy / p.m;
+          p.ax = p.fx / p.m;
+
+          // Let our super-class update our x and y
+          this._super(dt);
+
+          // Force our lander to stay in our box 
+          // and zero out our velocity when we hit a wall
+          if(p.y < 0) { p.y = 0;  p.vy = 0; }
+          if(p.y > Q.height- p.h) { p.y = Q.height - p.h; p.vy = 0; }
+          if(p.x < 0) { p.x = 0; p.vx = 0; }
+          if(p.x > Q.width - p.w) { p.x = Q.width - p.w; p.vx = 0; }
+        }
+      });
+
+      Q.load(['lander.png','background.png', 
+              'lander_thrust.png','map.png'], function() {
+
+        Q.scene("level",new Q.Scene(function(stage) {
+          stage.insert(new Q.Sprite({ asset: "background.png" }));
+          stage.insert(new Q.Sprite({ asset: "map.png" }));
+
+          var ship = stage.insert(new Q.Ship({
+            asset: 'lander.png',
+            x:       10, // X Position
+            y:       170, // Y Position
+            gravity: 20,  // Gravity
+            m:       1,   // Ship’s Mass
+            thrustX: 40,  // Horizontal Thrust
+            thrustY: 80,  // Vertical Thrust    
+          }));
+
+        }));
+
+        Q.stageScene("level");
+      });
+    </script>
+  </body>
+</html>
+

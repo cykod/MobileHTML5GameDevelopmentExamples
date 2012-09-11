@@ -1,0 +1,27 @@
+{
+  "resources": [
+    "audiosprites.caf",
+    "audiosprites.ac3",
+    "audiosprites.mp3",
+    "audiosprites.m4a",
+    "audiosprites.ogg"
+  ],
+  "spritemap": {
+    "silence": {
+      "start": 0,
+      "end": 1,
+      "loop": true
+    },
+    "block": {
+      "start": 2,
+      "end": 2.03,
+      "loop": false
+    },
+    "paddle": {
+      "start": 4,
+      "end": 4.04,
+      "loop": false
+    }
+  },
+  "autoplay": "silence"
+}

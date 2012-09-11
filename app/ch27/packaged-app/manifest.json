@@ -1,0 +1,15 @@
+{
+  "name": "Alien Invasion Packaged",
+  "description": "Save the world, you know the drill...",
+  "version": "1.0.0",
+  "app": {
+    "launch": {
+      "local_path": "index.html"
+    }
+  },
+  "icons": {
+    "128": "invasion_128.png",
+    "16": "invasion_16.png"
+  }
+}
+

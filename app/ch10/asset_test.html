@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Canvas Test</title>
+    <script src='jquery.min.js'></script>
+    <script src='underscore.js'></script>
+    <script src='quintus.js'></script>
+  </head>
+  <body>
+    <script>
+      var Q = Quintus({ audioSupported: [ 'wav','ogg']}).setup();
+
+      Q.load(['sprites.png','correct.ogg'],function() {
+        alert('Ok!');
+        console.log(Q.assets);
+      });
+    </script>
+  </body>
+</html>

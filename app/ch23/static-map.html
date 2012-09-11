@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grabbing the position</title>
+  <script src='js/jquery.min.js'></script>
+</head>
+<body>
+  <script>
+    function logPosition(position) {
+      var url = "http://maps.googleapis.com/maps/api/staticmap?" +
+                "zoom=13&size=320x420&" +
+                "markers=color:blue%7Clabel:S%7C" +
+                position.coords.latitude + "," +
+                position.coords.longitude + "&sensor=true";
+
+      $("<img>").attr("src",url)
+                .appendTo("body");
+    }
+
+    navigator.geolocation.getCurrentPosition(logPosition,positionError,{
+      enableHighAccuracy: true
+    });
+  </script>
+</body>
+</html>

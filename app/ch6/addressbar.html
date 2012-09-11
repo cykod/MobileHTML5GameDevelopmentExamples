@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Viewport</title>
+  <link rel="stylesheet" href="lib/base.css" type="text/css" />
+  <script src='lib/jquery.min.js'></script>
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta names="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable:no">
+  
+</head>
+<body>
+  <div id='container'>
+    <canvas id='game' width='480' height='320'></canvas>
+  </div>
+
+<script>
+
+// Wait for document ready callback
+$(function() {
+  var maxWidth = 480;
+  var maxHeight = 480;
+  var initialWidth = $("#game").attr('width');
+  var initialHeight = $("#game").attr('height');
+
+  var touchDevice = 'ontouchstart' in document;
+
+  var handleResize = function() {
+    var w = window.innerWidth, h = window.innerHeight, newDim;
+
+    // Make sure the content is bigger than the page.
+    if(w <= maxWidth && touchDevice) {
+      $("#container").css({height: h * 2});
+    }
+
+    window.scrollTo(0,1);
+
+    // Get the height again, scrollTo may have changed the innerHeight
+    h = window.innerHeight;
+
+    if(w <= maxWidth) {
+     newDim = { width: Math.min(w,maxWidth),
+                height: Math.min(h,maxHeight) };
+
+     $("#game").css({position:'absolute', left:0, top:0 });
+     $("#container").css("width","auto");
+
+    } else {
+     newDim = { width: initialWidth,
+                height: initialHeight };
+
+     $("#game").css('position','relative');
+     $("#container").css('width', maxWidth);
+
+    }
+    $("#game").attr(newDim)
+
+    // Let the game know the page has resized.
+    // Game.resize(newDim);
+
+  };
+
+  var resizeEvent = touchDevice ? 'orientationchange' : 'resize';
+  $(window).on(resizeEvent,handleResize);
+  
+  $(document).on("touchmove",function(event) {
+    event.preventDefault();
+  });
+
+  handleResize();
+
+
+});
+
+</script>
+
+</body>
+</html>
+

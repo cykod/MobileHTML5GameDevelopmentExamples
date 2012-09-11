@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <title>WebSocket Test</title>
+</head>
+<body>
+<script>  
+  var echoURI = "ws://echo.websocket.org/"; 
+
+  var socket;
+  
+  $(function() { 
+
+    socket = new WebSocket(echoURI); 
+
+    socket.onopen = function() { 
+      $("#output").append("<div>WebSocket Opened</div>");
+    }; 
+    
+    socket.onclose = function() { 
+      $("#output").append("<div>WebSocket Opened</div>");
+    }; 
+    
+    socket.onmessage = function(event) { 
+      $("#output").append("<div>WebSocket Message:" + event.data + "</div>");
+    }; 
+    
+    socket.onerror = function() { 
+      $("#output").append("<div>WebSocket Error</div>");
+    }  
+
+    $("#send").on("click",function() {
+      var value = $("#message").val();
+
+      $("#output").append("<div>Sending: " + value + "</div>");
+      socket.send(value);
+
+      $("#message").val("");
+    });
+  });
+    
+</script>  
+
+<input type='text' id='message'/><button id='send'>Send</button>
+<div id="output"></div>  
+</body>
+</html>
+
+

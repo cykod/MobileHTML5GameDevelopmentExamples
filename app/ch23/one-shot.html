@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Grabbing the position</title>
+</head>
+<body>
+  <script>
+    function logPosition(position) {
+      console.log(position);
+    }
+
+    function positionError(error) {
+      console.log(error);
+    }
+
+    navigator.geolocation.getCurrentPosition(logPosition,positionError,{
+      enableHighAccuracy: true
+    });
+  </script>
+</body>
+</html>

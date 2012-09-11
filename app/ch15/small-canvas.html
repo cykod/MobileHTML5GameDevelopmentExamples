@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <script src='jquery.min.js'></script>
+</head>
+<body>
+  <style> 
+    canvas { 
+      width: 200px; height: 200px; 
+      image-rendering: optimizeSpeed;          
+      image-rendering: -moz-crisp-edges;        
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: optimize-contrast;     
+      -ms-interpolation-mode: nearest-neighbor;
+    }
+  </style>
+  <canvas width="2" height="2"></canvas>
+  <canvas width="10" height="10"></canvas>
+  <canvas width="50" height="50"></canvas>
+  <canvas width="10" height="100"></canvas>
+
+  <script>
+    $("canvas").each(function() {
+      var ctx = this.getContext("2d");
+      for(var y=0,h=this.height;y<h;y++) {
+        for(var x=0,w=this.width;x<w;x++) {
+          var r = Math.floor(Math.random()*255),
+              g = Math.floor(Math.random()*255),
+              b = Math.floor(Math.random()*255);
+          ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+          ctx.fillRect(x,y,1,1);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Input Test</title>
+    <meta name='viewport' content='width=device-width, user-scalable=no'>
+    <script src='jquery.min.js'></script>
+    <script src='underscore.js'></script>
+    <script src='quintus.js'></script>
+    <script src='quintus_input.js'></script>
+    <style> body { margin:0px; padding:0px; } </style>
+  </head>
+  <body>
+    <script>
+      var q = Quintus()
+              .include("Input")
+              .setup()
+              .controls(true);
+
+      q.input.bind('fire',function() {
+        console.log('fire!');
+      });
+
+      q.input.bind('fireUp',function() {
+        console.log('fire up');
+      });
+
+      q.gameLoop(function() {
+        q.clear();
+        q.input.drawCanvas();
+      });
+      q.el.css('backgroundColor','#666');
+
+    </script>
+  </body>
+</html>

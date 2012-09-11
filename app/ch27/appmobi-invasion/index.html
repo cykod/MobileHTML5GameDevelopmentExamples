@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Alien Invasion</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+<style type="text/css">
+    /* Prevent copy paste for all elements except text fields */
+    *  { -webkit-user-select:none; -webkit-tap-highlight-color:rgba(255, 255, 255, 0); 
+    input, textarea  { -webkit-user-select:text; }
+    
+    /* Set up the page with a default background image */
+    body {
+        background-color:#fff;
+        color:#000;
+        font-family:Arial;
+        font-size:48pt;
+        margin:0px;padding:0px;
+        background-image:url('images/background.jpg');
+    }
+</style>
+<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/appmobi.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://localhost:58888/_appMobi/xhr.js"></script> 
+<script type="text/javascript">
+/* This code is used to run as soon as appMobi activates */
+var onDeviceReady=function(){
+    //Size the display to 768px by 1024px
+    AppMobi.display.useViewport(320,480)
+
+    //hide splash scree
+    AppMobi.device.hideSplashScreen();	
+
+    //Load files for Direct Canvas
+    AppMobi.canvas.load("index.js");
+
+    var keys = {}
+
+    trackTouch = function(e) {
+      var touch, x;
+
+      var gutterWidth = 10;
+      var unitWidth = 320/5;
+      var blockWidth = unitWidth-gutterWidth;
+
+      e.preventDefault();
+      keys['left'] = false;
+      keys['right'] = false;
+      for(var i=0;i<e.touches.length;i++) {
+	touch = e.touches[i];
+	x = touch.pageX;
+	if(x < unitWidth) {
+	  keys['left'] = true;
+	} 
+	if(x > unitWidth && x < 2*unitWidth) {
+	  keys['right'] = true;
+	} 
+      }
+
+      if(e.type == 'touchstart' || e.type == 'touchend') {
+	for(i=0;i<e.changedTouches.length;i++) {
+	  touch = e.changedTouches[i];
+	  x = touch.pageX;
+	  if(x > 4 * unitWidth) {
+	    keys['fire'] = (e.type == 'touchstart');
+	  }
+	}
+      }
+      AppMobi.canvas.execute('Game.setKeys(' + keys["left"] + ","
+      	                                     + keys["right"] + ","
+					     + keys["fire"] + ")");
+    };
+
+
+    document.addEventListener('touchstart',trackTouch,false);
+    document.addEventListener('touchmove',trackTouch,false);
+    document.addEventListener('touchend',trackTouch,false);
+    document.addEventListener('touchcancel',trackTouch,false);
+
+};
+document.addEventListener("appMobi.device.ready",onDeviceReady,false);    
+</script>
+</head>
+<body>
+</body>
+</html>

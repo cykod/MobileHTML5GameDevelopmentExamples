@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src='jquery.min.js'></script>
+    <script src='underscore.js'></script>
+    <script src='quintus.js'></script>
+  </head>
+  <body>
+    <script>
+      var EventTest = Quintus();
+
+      var player = new EventTest.Evented();
+      player.name = 'Frank';
+      player.sceneOver = function() {
+        console.log(this.name + " sceneOver method");
+      };
+
+      var scene = new EventTest.Evented();
+
+      scene.bind('start',player,function() {
+        console.log(this.name + " listening to start event");
+      });
+
+      scene.bind('end',player,'sceneOver');
+
+      console.log("======== triggering start and end ========");
+      console.log(": Should see two listeners trigger");
+      // Should see both console.log calls
+      scene.trigger('start');
+      scene.trigger('end');
+
+      scene.unbind('start',player);
+
+      console.log("======== triggering start and end ========");
+      console.log(": Should see only end listener");
+      // Should see only the end event
+      scene.trigger('start');
+      scene.trigger('end');
+
+      player.debind();
+
+      console.log("======== triggering start and end ========");
+      console.log(": Should see no listeners");
+      // Should see no events
+      scene.trigger('start');
+      scene.trigger('end');
+
+    </script>
+
+  </body>
+</html>

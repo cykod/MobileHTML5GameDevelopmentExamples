@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src='jquery.min.js'></script>
+    <script src='underscore.js'></script>
+    <script src='quintus.js'></script>
+  </head>
+  <body>
+    <div id='timer'>0</div>
+    <div id='fps'>0</div>
+    <button id='pause'>Pause</button>
+    <button id='unpause'>Unpause</button>
+
+    <script>
+      var TimerTest = Quintus();
+      
+      var totalFrames = 0, totalTime = 0;;
+      TimerTest.gameLoop(function(dt) {
+          totalTime += dt;
+          totalFrames += 1;
+          $("#timer").text(Math.round(totalTime * 1000) + " MS");
+          $("#fps").text(Math.round(totalFrames / totalTime) + " FPS");
+      });
+
+      $("#pause").on('click',TimerTest.pauseGame);
+      $("#unpause").on('click',TimerTest.unpauseGame);
+
+    </script>
+
+  </body>
+</html>

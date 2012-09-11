@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Simple Cannon example</title>
+    <script src='js/jquery.min.js'></script>
+    <script src='js/underscore.js'></script>
+    <script src='js/quintus.js'></script>
+    <script src='js/quintus_sprites.js'></script>
+  </head>
+  <body>
+    <script>
+     var Q = Quintus().include("Sprites").setup()
+
+     Q.load(['cannonball.png','cannonball2.png'],function() {
+
+       var ball1 = new Q.Sprite({
+         asset: 'cannonball.png',
+         x0:    0,  // Initial X position
+         vx0:  20,  // X velocity
+         ax:    0,  // X acceleration
+         y0:  380,  // Initial Y position
+         vy0:-100,  // Y Velocity
+         ay:   20,  // Constant Y acceleration
+         t:     0   // Starting time
+       });
+
+       ball1.step = function(dt) {
+         var p = this.p;
+         p.t += dt;
+
+         p.x = p.x0 + p.vx0 * p.t + 0.5 * p.ax * (p.t * p.t);
+         p.y = p.y0 + p.vy0 * p.t + 0.5 * p.ay * (p.t * p.t);
+       }
+
+       var ball2 = new Q.Sprite({
+         asset: 'cannonball2.png',
+         x:     0,
+         vx:   20,
+         ax:    0,
+         y:   380,
+         vy: -100,
+         ay:   20
+       });
+
+       ball2.step = function(dt) {
+         var p = this.p;
+
+         p.vy += p.ay * dt;
+
+         p.x += p.vx * dt;
+         p.y += p.vy * dt;
+       }
+
+      Q.gameLoop(function(dt) {
+        Q.clear(); 
+
+        ball1.step(dt);
+        ball1.draw(Q.ctx);
+
+        ball2.step(dt);
+        ball2.draw(Q.ctx);
+      });
+
+    });
+
+    </script>
+  </body>
+</html>
+

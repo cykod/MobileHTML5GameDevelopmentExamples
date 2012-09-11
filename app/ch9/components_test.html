@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src='jquery.min.js'></script>
+    <script src='underscore.js'></script>
+    <script src='quintus.js'></script>
+  </head>
+  <body>
+    <script>
+      var exGame = Quintus();
+
+      var player = new exGame.GameObject();
+
+      
+      exGame.register('sword',{
+        added: function() {
+          // When whatever we are registered with triggers
+          // a fire event, call the attack method
+          this.entity.bind('fire',this,'attack');
+        },
+
+        attack: function() {
+          console.log("Attacked!");
+          // Code to attack
+        },
+
+        // Methods copied directly over to the entity
+        extend: {
+          attack: function() {
+            this.sword.attack();
+          }
+        }
+
+      });
+
+      exGame.register('shield',{
+        added: function() {
+          this.entity.bind('fire',this,'defend');
+        },
+
+        defend: function() {
+          console.log('Defending');
+        },
+
+        extend: {
+          defend: function() {
+            this.shield.defend();
+          }
+        }
+      });
+
+      
+      // Add the sword component
+      player.add('sword');
+      player.add('shield');
+      player.add('sword'); // Shouldn't add again
+
+
+      // Calls attack and defend via event
+      player.trigger('fire'); 
+
+      // Call attack and defend directly from extended event
+      player.attack(); 
+      player.defend();
+
+      // Remove the sword component
+      console.log("Removed Sword");
+      player.del('shield'); 
+
+      console.log("Should only have shield");
+      console.log(player.has('sword'))
+      console.log(player.has('shield'))
+      console.log(player.activeComponents.length);
+      console.log(player.activeComponents);
+
+      // Should raise an error
+      //player.attack();
+      player.trigger('fire'); 
+
+      // Should be ok
+      //player.defend();
+
+      console.log("Add multiple");
+      player.add('sword, shield'); 
+      player.trigger('fire'); 
+
+    
+    </script>
+
+  </body>
+</html>

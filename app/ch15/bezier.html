@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+</head>
+  <script src='jquery.min.js'></script>
+  <style> 
+    body { padding:0px; margin:0px; }
+    canvas { background-color:black; } 
+  </style>
+
+  <canvas id="mycanvas", width="600" height="400"></canvas>
+
+  <script>
+    var canvas = $("#mycanvas")[0],
+        ctx = canvas.getContext("2d"),
+        width = canvas.width,
+        height = canvas.height;
+
+    ctx.strokeStyle = "#FFF";
+    ctx.fillStyle = "#FFF";
+
+    function drawBeizer(cx,cy) {
+      var x0 = 50,
+          y0 = 200,
+          x1 = 550,
+          y1 = 200;
+
+
+      ctx.clearRect(0,0,600,400);
+      ctx.beginPath();
+      ctx.moveTo(x1,y1);
+      ctx.lineTo(cx,cy);
+      ctx.lineTo(x0,y0);
+
+      ctx.quadraticCurveTo(cx,cy,x1,y1);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(cx,cy,5,0,Math.PI*2);
+      ctx.fill();
+    }
+
+    $(canvas).on("mousemove",function(e) {
+      drawBeizer(e.pageX,e.pageY);
+
+    });
+
+  
+
+        
+
+  </script>
+</body>
+</html>
+
+
+

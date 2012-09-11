@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Watching the position</title>
+  <script src='js/jquery.min.js'></script>
+</head>
+<body>
+  <script>
+    function logPosition(position) {
+      $("#logs").prepend(position.coords.latitude + "," +
+                         position.coords.latitude + "<br/>");
+    }
+
+    function positionError(error) {
+      console.log(error);
+    }
+
+    var watchID = navigator.geolocation.watchPosition(logPosition,positionError,{
+      enableHighAccuracy: true
+    });
+
+    setTimeout(function() {
+      navigator.geolocation.clearWatch(watchID);
+    },30000);
+  </script>
+  <div id='logs'></div>
+</body>
+</html>
+

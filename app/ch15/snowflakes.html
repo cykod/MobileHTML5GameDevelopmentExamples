@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+</head>
+  <script src='jquery.min.js'></script>
+  <style> canvas { background-color:white; } </style>
+
+  <canvas id="mycanvas", width="600" height="400"></canvas>
+
+  <script>
+    var canvas = $("#mycanvas")[0],
+        ctx = canvas.getContext("2d");
+
+    ctx.strokeStyle = "#FFF";
+
+    function randInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+
+    function randomSnowflake() {
+      var rootBranches = randInt(8)+1,
+          childBranches = randInt(8)+2,
+          childSpread = Math.random()*0.5 + 0.5,
+          size = 50 + randInt(50),
+          level = randInt(4)+1,
+          distance = Math.random()*0.5 + 0.5;
+
+      function drawSnowflake(branches,spread,level) {
+        var angle;
+
+        for(var i=0;i<branches;i++) {
+          if(spread == 1) {
+            // Don't overlap branches of we are rotating fully
+            angle = Math.PI * 2 * spread * (-0.5 + i/branches);
+          } else {
+            angle = Math.PI * 2 * spread * (-0.5 + i/(branches-1));
+          }
+
+          ctx.save();
+
+          // Rotate to point straight up for this branch
+          ctx.rotate(angle);
+
+          // Draw this branch
+          ctx.beginPath();
+          ctx.moveTo(0,0);
+          ctx.lineTo(0,size*distance);
+          ctx.stroke();
+
+          // Draw child branches if necessary
+          if(level > 0) {
+            // Move to the end of the branch and scale down
+            ctx.translate(0,size*distance);
+            ctx.scale(distance,distance);
+            drawSnowflake(childBranches,childSpread,level-1);
+          }
+          ctx.restore();
+        }
+
+      }
+
+      ctx.clearRect(0,0,600,400);
+      ctx.save();
+
+      var r = randInt(255), g = randInt(255), b = randInt(255);
+
+      ctx.strokeStyle = "rgb(" + r + "," + g + "," + b + ")";
+
+      // Uncomment the lines below to add a shadow-based "glow"
+      // at the cost of some additional drawing time
+      /* ctx.shadowColor = "white";
+         ctx.shadowBlur = 4;
+         ctx.shadowOffsetX = 0;
+         ctx.shadowOffsetY = 0; */
+
+      ctx.lineWidth = 2;
+      ctx.translate(300,200);
+      drawSnowflake(rootBranches,1,level);
+      ctx.restore();
+    }
+
+    randomSnowflake();
+
+    $(canvas).on('click',randomSnowflake);
+
+  
+
+        
+
+  </script>
+</body>
+</html>
+
+
+

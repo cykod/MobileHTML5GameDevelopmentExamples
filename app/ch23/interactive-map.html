@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Map</title>
+  <script src='js/jquery.min.js'></script>
+  <meta name="viewport" content="width=device-width, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+  <style> body { padding:0px; margin:0px; } </style>
+</head>
+<body>
+  <script>
+  $(function() { 
+    var map = null,
+        marker = null;
+
+    function createMap(latlng) {
+      var mapOptions = {
+        zoom: 18,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
+      };
+
+      var div = $("<div>").css({ width: "100%", 
+                                 height:"100%", 
+                                 position:"absolute"})
+                          .appendTo("body")[0];
+                
+      map = new google.maps.Map(div, mapOptions);
+      marker = new google.maps.Marker({
+        position: latlng, 
+        map: map,
+        title: "Me"
+      });   
+    }
+
+
+    function updateMap(pos) {
+      var latlng = new google.maps.LatLng(pos.coords.latitude,
+                                          pos.coords.longitude);
+      if(!map) {
+        createMap(latlng);
+      } else {
+        marker.setPosition(latlng);
+      }
+    }
+
+    function positionError(error) {
+      alert("Error tracking your position");
+      navigator.geolocation.clearWatch(watchID);
+    }
+
+    var watchID = navigator.geolocation.watchPosition(updateMap,positionError,{
+      enableHighAccuracy: true
+    });
+
+
+  });
+  </script>
+</body>
+</html>
