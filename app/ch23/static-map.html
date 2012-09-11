@@ -18,6 +18,8 @@
                 .appendTo("body");
     }
 
+    function positionError() { console.log("Error retrieving position"); };
+
     navigator.geolocation.getCurrentPosition(logPosition,positionError,{
       enableHighAccuracy: true
     });
