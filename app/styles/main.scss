@@ -16,9 +16,26 @@ padding: 9px 0;
 
 }
 
+.small-description { display:none; }
 
 @media screen and (max-width: 1000px) {
 	img.padded.pull-left { float:none; }
+}
+
+@media screen and (max-width: 800px) {
+	.small-description { display:block; }
+	.large-description { display:none; }
+
+	.hero-unit h1 { 
+		padding-top:20px;
+		font-size:40px;
+		clear:both;
+	}
+
+	.hero-unit h2 {
+		font-size:24px;
+		line-height:30px;
+	}
 
 }
 
@@ -27,4 +44,8 @@ padding: 9px 0;
 	img.padded.pull-left { float:left; }
 
 	.span4 { clear:both; }
+
+
+
 }
+
